@@ -1,6 +1,6 @@
 # DealRadar – Serverless Scraping + Alert System
 
-DealRadar is a fully serverless system designed to scrape websites, detect changes, and send real-time alerts based on defined conditions. Built on AWS services including Lambda, EventBridge, DynamoDB, and SNS.
+DealRadar is a fully serverless system designed to scrape websites, detect changes, and send real-time alerts based on defined conditions (Currently trying to scrape the big ones like Amazon and Walmart). Built on AWS services including Lambda, EventBridge, DynamoDB, and SNS.
 
 ## 🚀 Architecture Overview
 
