@@ -8,8 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time # For brief pauses if needed
 
 # --- Target Amazon URL ---
-TARGET_URL = "https://www.amazon.com/Apple-2025-MacBook-13-inch-Laptop/dp/B0DZDC3WW5/ref=sr_1_1_sspa?crid=WTX3FXMCP3E&dib=eyJ2IjoiMSJ9.MQNCMFxFEN5ThaBGqVYXrmPN4ISTvPqeUBHBUqiTCVnba1DRKlYtRxiWHoEBJVjnv49VJq35yifqiTHRIL0yf14G3EQ6O1sEPXjxFO6dlQBJRnFLZRXoTSL0mV9aldpHnEQSN7wEzj_LRzOu5swLSHDUlHEfgiu54GFHYruuu8yTt3Kn-DHsEsw4Dea1udCtWFjNZSv9PKbOEBD6ZWdF-9EUlBRgrKUowxo2agICFzE.HX0sJDmvXlwbeEWhwnRBhtekgnkVCWWOW0FlgwmP5eE&dib_tag=se&keywords=macbook&qid=1748531276&sprefix=macbook%2Caps%2C155&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1"
-
+TARGET_URL = "https://www.amazon.com/Google-Pixel-Unlocked-Smartphone-Advanced/dp/B0D7HWJDQM/ref=sr_1_4?crid=2IW5M3G8CZ9QY&dib=eyJ2IjoiMSJ9.9YRxo9HQbGPoJngmlwzUscX4tg4ju3yMjd1_9CKfyi9e6DubMOel5bYcC2pJYYTsjUD9TBBX1aURnLjy32V-pLWgjQzbOT3rm9DXYWc-Zqt9C0BGkBzGodtmz5n1CU2iQVq2yLZMnsq9l1SJwOkfaQhP5VOlpbCWcEdBMyIDK9mW_gpZAA6Df-xksSIfcvNbd6xqDX75tG0jGIU6NVFd8Loc0b-ENCHqOdKYKncH_Hc.3adOSx_GdwapwhemPokXFw1w1ZzNl-z92lELSm-baoM&dib_tag=se&keywords=Google%2BPixel&qid=1748532604&sprefix=google%2Bpixel%2B%2Caps%2C147&sr=8-4&th=1"
 # --- Path to your ChromeDriver executable ---
 # Make sure chromedriver is in the same directory as this script, or provide the full path.
 CHROMEDRIVER_PATH = "./chromedriver.exe" # For Windows, use "./chromedriver" for Mac/Linux
