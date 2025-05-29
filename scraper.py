@@ -1,30 +1,68 @@
-import requests
+import requests # Still good for basic HTTP requests if needed, but less for main scrape
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time # For brief pauses if needed
 
-# --- CORRECTED TARGET URL ---
-TARGET_URL = "https://www.amazon.com/Dell-G16-7630-Gaming-Laptop/dp/B0CKD892K1/"
+# --- Target Amazon URL ---
+TARGET_URL = "https://www.amazon.com/Apple-2025-MacBook-13-inch-Laptop/dp/B0DZDC3WW5/ref=sr_1_1_sspa?crid=WTX3FXMCP3E&dib=eyJ2IjoiMSJ9.MQNCMFxFEN5ThaBGqVYXrmPN4ISTvPqeUBHBUqiTCVnba1DRKlYtRxiWHoEBJVjnv49VJq35yifqiTHRIL0yf14G3EQ6O1sEPXjxFO6dlQBJRnFLZRXoTSL0mV9aldpHnEQSN7wEzj_LRzOu5swLSHDUlHEfgiu54GFHYruuu8yTt3Kn-DHsEsw4Dea1udCtWFjNZSv9PKbOEBD6ZWdF-9EUlBRgrKUowxo2agICFzE.HX0sJDmvXlwbeEWhwnRBhtekgnkVCWWOW0FlgwmP5eE&dib_tag=se&keywords=macbook&qid=1748531276&sprefix=macbook%2Caps%2C155&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1"
 
-def scrape_product_data(url):
+# --- Path to your ChromeDriver executable ---
+# Make sure chromedriver is in the same directory as this script, or provide the full path.
+CHROMEDRIVER_PATH = "./chromedriver.exe" # For Windows, use "./chromedriver" for Mac/Linux
+
+
+def scrape_product_data_selenium(url):
+    driver = None # Initialize driver to None
     try:
-        # --- Amazon often blocks requests without a proper User-Agent header ---
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            # You can find your current User-Agent by searching "what is my user agent" on Google.
-        }
+        # Set up Chrome options for headless mode
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--window-size=1920,1080") # Set a fixed window size
+        chrome_options.add_argument("start-maximized")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled") # Hide automation control
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"]) # Remove "Chrome is being controlled by automated test software"
+        chrome_options.add_experimental_option('useAutomationExtension', False) # Disable automation extension
+        chrome_options.add_argument("--headless")   #Run Chrome in headless mode (no GUI)
+        chrome_options.add_argument("--no-sandbox") # Required for some environments
+        chrome_options.add_argument("--disable-dev-shm-usage") # Required for some environments
+        # Optional: Add a more realistic User-Agent for headless browser
+        chrome_options.add_argument(f"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+        # Optional: Disable images for faster loading (might break some layouts)
+        # chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+        chrome_options.add_argument("--window-size=1920,1080") # Set a fixed window size
 
-        # 1. Fetch the web page content
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx or 5xx)
 
-        # 2. Parse the HTML content
-        soup = BeautifulSoup(response.text, 'html.parser')
+        # Initialize the WebDriver
+        service = Service(executable_path=CHROMEDRIVER_PATH)
+        driver = webdriver.Chrome(service=service, options=chrome_options)
 
-        # --- 3. EXTRACT DATA FOR AMAZON LAPTOP PAGE ---
-        #
-        # Inspecting the Amazon page, typical elements for product name and price are:
-        # Product Name: Element with id="productTitle"
-        # Price: Elements like span class="a-price-whole" and span class="a-price-fraction"
-        #        or span class="a-offscreen" (which holds the full price for screen readers)
+        print(f"Opening URL with Selenium: {url}")
+        driver.get(url)
+
+        # --- IMPORTANT: Wait for specific elements to load ---
+        # Instead of just time.sleep(), use WebDriverWait for robustness.
+        # We wait until the product title (or price) element is present/visible.
+        # You need to identify a reliable element that indicates the page is fully loaded.
+        # For Amazon, 'productTitle' is usually one of the first.
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.ID, 'productTitle'))
+        )
+        # You might add another wait for the price element if it loads separately:
+        # WebDriverWait(driver, 10).until(
+        #    EC.presence_of_element_located((By.CLASS_NAME, 'a-price-whole'))
+        # )
+
+        # Get the fully rendered page source
+        page_source = driver.page_source
+
+        # Now, use BeautifulSoup to parse the fully loaded HTML
+        soup = BeautifulSoup(page_source, 'html.parser')
+
+        # --- EXTRACT DATA FOR AMAZON LAPTOP PAGE ---
+        # Use the same selectors as before, as they are often correct once loaded
 
         product_name_element = soup.find('span', id='productTitle')
         product_name = product_name_element.text.strip() if product_name_element else "Product Name Not Found"
@@ -34,7 +72,7 @@ def scrape_product_data(url):
         price_element = soup.find('span', class_='a-offscreen')
         product_price = price_element.text.strip() if price_element else "Price Not Found"
 
-        # Fallback for price if a-offscreen isn't found (less reliable)
+        # Fallback for price if a-offscreen isn't found (less reliable, but worth a try)
         if product_price == "Price Not Found":
             # Try to combine whole and fractional parts if available
             price_whole = soup.find('span', class_='a-price-whole')
@@ -42,9 +80,6 @@ def scrape_product_data(url):
             if price_whole and price_fraction:
                 product_price = f"${price_whole.text.strip()}{price_fraction.text.strip()}"
 
-
-        # Example of how you might get the current stock status
-        # This will vary greatly by product and availability
         availability_element = soup.find('div', id='availability')
         availability = availability_element.text.strip() if availability_element else "Availability Not Found"
 
@@ -56,32 +91,24 @@ def scrape_product_data(url):
             "availability": availability
         }
 
-    except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred: {http_err} for {url} (Status: {http_err.response.status_code})")
-        print("This often means Amazon is blocking your request. Try rotating User-Agents or using proxies.")
-        return None
-    except requests.exceptions.ConnectionError as conn_err:
-        print(f"Connection error occurred: {conn_err} for {url}")
-        return None
-    except requests.exceptions.Timeout as timeout_err:
-        print(f"Timeout error occurred: {timeout_err} for {url}")
-        return None
-    except requests.exceptions.RequestException as req_err:
-        print(f"An unexpected request error occurred: {req_err} for {url}")
-        return None
     except Exception as e:
-        print(f"An error occurred during parsing: {e}")
+        print(f"An error occurred during Selenium scraping: {e}")
         return None
+    finally:
+        # Ensure the browser is closed even if an error occurs
+        if driver:
+            driver.quit()
 
-if __name__ == "__main__": # Corrected 'if name' to 'if __name__'
-    print(f"Attempting to scrape: {TARGET_URL}")
-    data = scrape_product_data(TARGET_URL)
+
+if __name__ == "__main__":
+    print(f"Attempting to scrape: {TARGET_URL} using Selenium...")
+    data = scrape_product_data_selenium(TARGET_URL) # Call the new Selenium function
     if data:
         print("\n--- Scraped Data ---")
         for key, value in data.items():
             print(f"{key}: {value}")
     else:
-        print("Failed to scrape data. Check for Amazon blocking or HTML structure changes.")
+        print("Failed to scrape data. Check WebDriver path, Chrome version, or Amazon blocking.")
 
-    print("\nNote: Amazon scraping can be inconsistent without advanced techniques like proxies or headless browsers.")
-    print("If you encounter issues, try a simpler website first or consider using a dedicated web scraping API.")
+    print("\nNote: Even with Selenium, Amazon scraping is challenging and inconsistent.")
+    print("You may still encounter CAPTCHAs or blocks. Consider proxies or scraping APIs for reliability.")
