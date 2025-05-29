@@ -1,4 +1,4 @@
-import requests # Still good for basic HTTP requests if needed, but less for main scrape
+import requests # Usually good for basic HTTP requests if needed, but less for main scraping
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
