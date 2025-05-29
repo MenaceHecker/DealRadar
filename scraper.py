@@ -9,7 +9,6 @@ import time # For brief pauses if needed
 
 # --- Target Amazon URL ---
 TARGET_URL = "https://www.amazon.com/Google-Pixel-Unlocked-Smartphone-Advanced/dp/B0D7HWJDQM/ref=sr_1_4?crid=2IW5M3G8CZ9QY&dib=eyJ2IjoiMSJ9.9YRxo9HQbGPoJngmlwzUscX4tg4ju3yMjd1_9CKfyi9e6DubMOel5bYcC2pJYYTsjUD9TBBX1aURnLjy32V-pLWgjQzbOT3rm9DXYWc-Zqt9C0BGkBzGodtmz5n1CU2iQVq2yLZMnsq9l1SJwOkfaQhP5VOlpbCWcEdBMyIDK9mW_gpZAA6Df-xksSIfcvNbd6xqDX75tG0jGIU6NVFd8Loc0b-ENCHqOdKYKncH_Hc.3adOSx_GdwapwhemPokXFw1w1ZzNl-z92lELSm-baoM&dib_tag=se&keywords=Google%2BPixel&qid=1748532604&sprefix=google%2Bpixel%2B%2Caps%2C147&sr=8-4&th=1"
-
 # --- Path to your ChromeDriver executable ---
 # Make sure chromedriver is in the same directory as this script, or provide the full path.
 CHROMEDRIVER_PATH = "./chromedriver.exe" # For Windows, use "./chromedriver" for Mac/Linux
