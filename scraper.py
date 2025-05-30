@@ -109,5 +109,5 @@ if __name__ == "__main__":
     else:
         print("Failed to scrape data. Check WebDriver path, Chrome version, or Amazon blocking.")
 
-    print("\nNote: Even with Selenium, Amazon scraping is challenging and inconsistent.")
-    print("You may still encounter CAPTCHAs or blocks. Consider proxies or scraping APIs for reliability.")
+    # print("\nNote: Even with Selenium, Amazon scraping is challenging and inconsistent.")
+    # print("You may still encounter CAPTCHAs or blocks. Consider proxies or scraping APIs for reliability.")
