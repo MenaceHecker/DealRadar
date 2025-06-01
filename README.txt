@@ -26,3 +26,6 @@ DealRadar is a fully serverless system designed to scrape websites, detect chang
 - Real-time alerting on specific conditions (e.g., price drop, new listing)
 
 ## 📚 Setup Instructions (Coming Soon)
+Setup the environment using : 
+1. For Windows: .\venv\Scripts\activate 
+2. For MacOS/Linux: source venv/bin/activate
