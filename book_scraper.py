@@ -6,7 +6,7 @@ TARGET_URL = "http://books.toscrape.com/catalogue/a-light-in-the-attic_1000/inde
 
 def scrape_product_data(url):
     try:
-        # User-Agent is less critical here, but good practice
+        # User-Agent is less critical here
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
