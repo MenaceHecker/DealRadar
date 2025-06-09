@@ -22,7 +22,7 @@ def scrape_product_data(url):
         # (Based on inspecting this specific page's HTML)
 
         # Product Name 
-        product_name_element = soup.find('h1') # There's usually only one h1 on a product page
+        product_name_element = soup.find('h1') # This may or may not be the product name with an h1 tag 
         product_name = product_name_element.text.strip() if product_name_element else "Product Name Not Found"
 
         # Product Price 
