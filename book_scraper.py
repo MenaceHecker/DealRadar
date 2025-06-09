@@ -21,7 +21,7 @@ def scrape_product_data(url):
         # --- 3. EXTRACT DATA FOR TOSCRAPE.COM BOOK PAGE ---
         # (Based on inspecting this specific page's HTML)
 
-        # Product Name (often in an h1 tag)
+        # Product Name 
         product_name_element = soup.find('h1') # There's usually only one h1 on a product page
         product_name = product_name_element.text.strip() if product_name_element else "Product Name Not Found"
 
