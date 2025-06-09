@@ -25,7 +25,7 @@ def scrape_product_data(url):
         product_name_element = soup.find('h1') # There's usually only one h1 on a product page
         product_name = product_name_element.text.strip() if product_name_element else "Product Name Not Found"
 
-        # Product Price (check for class 'price_color')
+        # Product Price 
         product_price_element = soup.find('p', class_='price_color')
         product_price = product_price_element.text.strip() if product_price_element else "Price Not Found"
 
