@@ -29,7 +29,7 @@ def scrape_product_data(url):
         product_price_element = soup.find('p', class_='price_color')
         product_price = product_price_element.text.strip() if product_price_element else "Price Not Found"
 
-        # Stock availability (look for class 'instock availability')
+        # Stock availability 
         availability_element = soup.find('p', class_='instock availability')
         availability = availability_element.text.strip() if availability_element else "Availability Not Found"
 
