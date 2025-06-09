@@ -15,7 +15,7 @@ def scrape_product_data(url):
         response = requests.get(url, headers=headers)
         response.raise_for_status()  # Raise an HTTPError for bad responses (4xx or 5xx)
 
-        # 2. Parse the HTML content
+        # 2. Parsing the HTML content
         soup = BeautifulSoup(response.text, 'html.parser')
 
         # --- 3. EXTRACTING DATA FOR TOSCRAPE.COM BOOK PAGE ---
