@@ -18,7 +18,7 @@ def scrape_product_data(url):
         # 2. Parse the HTML content
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # --- 3. EXTRACT DATA FOR TOSCRAPE.COM BOOK PAGE ---
+        # --- 3. EXTRACTING DATA FOR TOSCRAPE.COM BOOK PAGE ---
         # (Based on inspecting this specific page's HTML)
 
         # Product Name 
