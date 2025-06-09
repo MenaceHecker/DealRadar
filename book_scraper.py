@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-# --- NEW TARGET URL for a book on toscrape.com ---
+# --- SAMPLE TARGET URL  ---
 TARGET_URL = "http://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html"
 
 def scrape_product_data(url):
