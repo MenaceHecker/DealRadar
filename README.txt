@@ -2,7 +2,7 @@
 
 DealRadar is a fully serverless system designed to scrape websites, detect changes, and send real-time alerts based on defined conditions (Currently trying to scrape the big ones like Amazon and Walmart). Built on AWS services including Lambda, EventBridge, DynamoDB, and SNS.
 
-## 🚀 Architecture Overview
+## Architecture Overview
 
 - Scheduled scraping jobs via AWS EventBridge
 - Serverless execution using AWS Lambda
@@ -10,7 +10,7 @@ DealRadar is a fully serverless system designed to scrape websites, detect chang
 - Alert system via SNS email notifications
 - Monitoring via CloudWatch Logs
 
-## 📦 Tech Stack
+## Tech Stack
 
 - Python (scraper scripts)
 - AWS Lambda
@@ -19,13 +19,13 @@ DealRadar is a fully serverless system designed to scrape websites, detect chang
 - AWS SNS (notifications)
 - AWS CloudWatch (logging)
 
-## 🔥 Goals
+## Goals
 
 - Scalability with serverless architecture
 - Fault tolerance and error recovery
 - Real-time alerting on specific conditions (e.g., price drop, new listing)
 
-## 📚 Setup Instructions (Coming Soon)
+## 📚 Setup Instructions (Only this for the time being)
 Setup the environment using : 
 1. For Windows: .\venv\Scripts\activate 
 2. For MacOS/Linux: source venv/bin/activate
